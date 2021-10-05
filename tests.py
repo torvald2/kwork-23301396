@@ -3,6 +3,7 @@ import unittest
 
 from adaptors.parser import ItemPage
 from adaptors.internalDb import Db
+from adaptors.excel import SettingsData
 
 class TestParser(unittest.TestCase):
     def testParser(self):
@@ -25,6 +26,12 @@ class TestInnerDb(unittest.TestCase):
         self.assertEqual(rows[0][3],124.0)
         db.clearData()
         db.disconect()
+
+class TestExcelAdaptor(unittest.TestCase):
+    def testExcel(self):
+        sheet = SettingsData("./articles.xlsx")
+        data = sheet.articles
+        self.assertEqual(data[0]["Артикул WB"],3872113)
 
 
 
