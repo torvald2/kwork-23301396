@@ -11,10 +11,10 @@ class Db:
                        freePrice real
                        )''')
         self.__con.commit()
-    def setItem(self, arcticle, commisionPrice,freePrice):
+    def setItem(self,date, arcticle, commisionPrice,freePrice):
         self.__con.execute(f''' INSERT INTO data VALUES(
-                              {datetime.datetime.now()}
-                              {arcticle},
+                              '{date}',
+                              '{arcticle}',
                               {commisionPrice},
                               {freePrice} 
                                )

@@ -1,3 +1,4 @@
+from datetime import datetime
 import unittest
 
 from adaptors.parser import ItemPage
@@ -14,7 +15,16 @@ class TestParser(unittest.TestCase):
 
 class TestInnerDb(unittest.TestCase):
     def testData(self):
+        parsedDate = datetime.now()
         db = Db("testData.db")
+        db.setItem(parsedDate,"1",123.0,124.0)
+        rows = db.records
+        self.assertEqual(rows[0][0],f'{parsedDate}')
+        self.assertEqual(rows[0][1],1)
+        self.assertEqual(rows[0][2],123.0)
+        self.assertEqual(rows[0][3],124.0)
+        db.clearData()
+        db.disconect()
 
 
 
