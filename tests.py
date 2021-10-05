@@ -9,7 +9,7 @@ class TestParser(unittest.TestCase):
     def testParser(self):
         with open("testPage.html") as f:
             data = f.read()
-            item = ItemPage(data)
+            item = ItemPage(data, 123)
             prises = item.prices
             self.assertEqual(prises[0], 1480.0)
             self.assertEqual(prises[1], 1451.0)
