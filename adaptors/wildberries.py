@@ -4,7 +4,7 @@ class GetDataException(Exception):
     pass
 
 def getData(itemId):
-    url = f'https://www.wildberries.ru/catalog/{itemId}/detail.aspx?targetUrl=MI'
+    url = f'https://www.wildberries.ru/catalog/{itemId}/detail.aspx'
     resp = requests.get(url)
     if resp.status_code == 200:
         return resp.text

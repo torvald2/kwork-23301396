@@ -1,6 +1,6 @@
 from datetime import datetime
 import unittest
-
+import json
 from adaptors.parser import ItemPage
 from adaptors.internalDb import Db
 from adaptors.excel import SettingsData
@@ -32,6 +32,11 @@ class TestExcelAdaptor(unittest.TestCase):
         sheet = SettingsData("./articles.xlsx")
         data = sheet.articles
         self.assertEqual(data[0]["Артикул WB"],3872113)
+
+    def testSaveToExcel(self):
+        with open("testJson.json",'r') as f:
+            data = json.loads(f.read())
+            SettingsData.write_to_excel("./data.xlsx",data)
 
 
 

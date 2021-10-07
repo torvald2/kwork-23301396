@@ -6,19 +6,18 @@ class ParsingError(Exception):
 
 
 class ItemPage:
-    COMMISION_PRICE_SELECTOR = '#infoBlockProductCard > div.same-part-kt__price-block.hide-mobile > div > div > p.price-block__commission-wrap > span:nth-child(1)'
-    FREE_PRICE_SELECTOR = '#infoBlockProductCard > div.same-part-kt__price-block.hide-mobile > div > div > p.price-block__commission-wrap > span.price-block__price-commission.price-block__price-commission--free > span.price-block__free-commission'
+    COMMISION_PRICE_SELECTOR = '#root > div > div.main-layout_content__cg0Zt > div > div > div.page_content__3N2rR > div.page_priceContainer__3LDLr > div > div > div.prices_priceBox__2mpG1 > div > div > div > div > div.prices_finalPrice__1ShwA.prices_accent__FfE9q'
+    FREE_PRICE_SELECTOR = 'body > div.popper-wrapper_root__1IWrR.tooltip_tooltip__1bzTK.prices_tooltipPopper__bj1hd.prices_rewrite__3e3l0.popper-wrapper_rewrite__lCpWS > div > div:nth-child(3) > div.prices_value__1Xvkd'
     def __init__(self, itemData,itemId):
         self.page = BeautifulSoup(itemData,'html.parser')
         self.itemId = itemId
         self.__parse()
+        self.__comisionPrice = 0
         
     def __parse(self):
-        commisionPriceRaw = self.page.select_one(self.COMMISION_PRICE_SELECTOR)
-        freePriceRaw = self.page.select_one(self.FREE_PRICE_SELECTOR)
+        freePriceRaw = self.page.find_all("span", {"class": "price-block__price-free-commission"})
         try:
-            self.__comisionPrice =float(re.sub('[^\d\.]', '', commisionPriceRaw.string))
-            self.__freePrice = float(re.sub('[^\d\.]', '', freePriceRaw.string))
+            self.__freePrice = float(re.sub('[^\d\.]', '', freePriceRaw[0].string))
         except Exception as e:
             raise ParsingError(f"Не удалось спарсить товар.{self.itemId} Ошибка {e}")
 
